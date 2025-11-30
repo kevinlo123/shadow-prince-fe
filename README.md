@@ -1,4 +1,4 @@
-# Web SDK
+# Shadow Prince FE
 
 This is a web sdk that is convenient for you to develop a game in a declarative way. It is an optional way to build and launch your games on with [Stake Engine](https://engine.stake.com/) with some easy steps. It is powered by Svelte 5, PixiJS 8 and TurboRepo.
 
@@ -76,8 +76,8 @@ pnpm -v
 - Clone the repo to your local in VS Code terminal or others.
 
 ```
-git clone https://github.com/StakeEngine/web-sdk.git
-cd web-sdk
+git clone https://github.com/StakeEngine/shadow-prince-fe.git
+cd shadow-prince-fe
 ```
 
 - Install dependencies.
@@ -125,7 +125,7 @@ pnpm run dev --filter=lines
 
 - It is all good to have that error screen for now, because we have not connected to the RGS with DEV mode. We will show you how to do that in the launch-a-game step.
 
-- For more information about how the authentication is handled, please refer to [Authenticate.svelte](https://github.com/StakeEngine/web-sdk/blob/main/packages/components-shared/src/components/Authenticate.svelte)
+- For more information about how the authentication is handled, please refer to [Authenticate.svelte](https://github.com/StakeEngine/shadow-prince-fe/blob/main/packages/components-shared/src/components/Authenticate.svelte)
 
 <a name="buildAGame"></a>
 
@@ -186,10 +186,10 @@ Congratulations! You've completed the tutorial. You can explore the more content
 
 # FAQ
 - Q: Would it be possible to use a different programming language or framework, such as using Pixi.js only without Svelte?
-  - A: You can use anything as long as it compiles to a static website, it is only recommended to use the web-sdk for the easiest development and integration experience as everything is already set up for you, but you can also just fork it or take certain parts of it.
+  - A: You can use anything as long as it compiles to a static website, it is only recommended to use the shadow-prince-fe for the easiest development and integration experience as everything is already set up for you, but you can also just fork it or take certain parts of it.
 
-- Q: If we use our own UI/Web SDK, how can we pass configuration data into it?
-  - A: About how we handle authentication, configuration, jurisdiction and so on, you can find the answers and an example here: [Authenticate.svelte](https://github.com/StakeEngine/web-sdk/blob/main/packages/components-shared/src/components/Authenticate.svelte)
+- Q: If we use our own UI/Shadow Prince FE, how can we pass configuration data into it?
+  - A: About how we handle authentication, configuration, jurisdiction and so on, you can find the answers and an example here: [Authenticate.svelte](https://github.com/StakeEngine/shadow-prince-fe/blob/main/packages/components-shared/src/components/Authenticate.svelte)
 
 - Q: Do you have any specific policies (or methods) for handling currencies?
   - A: Check the function "numberToCurrencyString" in "packages/utils-shared/amount.ts", you will find that any currency that can be handled by "i18n.number" is supported. The currency will be passed in from the authentication request like this "stateBet.currency = authenticateData.balance.currency;". Two special currencies from the social casino like `stake.us` will be handled by "NO_LOCALISATION_CURRENCY_MAP".
@@ -232,9 +232,9 @@ const BET_TYPE_METHODS_MAP = {
 } as const;
 ```
 
-- Q: From what I see, most of the animated graphics seem to be spine, is their any other alternatives that you know of, besides spine?
+- Q: From what I see, most of the animated graphics seem to be spine, is there any other alternatives that you know of, besides spine?
   - A: Spritesheet animation is a good alternative.
-Check out the example of spritesheet animation here: [SpriteSheet.stories.svelte](https://github.com/StakeEngine/web-sdk/blob/main/packages/pixi-svelte-storybook/src/stories/SpriteSheet.stories.svelte)
+Check out the example of spritesheet animation here: [SpriteSheet.stories.svelte](https://github.com/StakeEngine/shadow-prince-fe/blob/main/packages/pixi-svelte-storybook/src/stories/SpriteSheet.stories.svelte)
 
 - Q: Is there a mechanism to switch from a game type (i.e. lines) to another game type (i.e. cluster) as a mechanic?
   - A: It's easy. What you can do:

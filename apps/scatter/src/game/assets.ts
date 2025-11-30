@@ -273,4 +273,12 @@ export default {
 		src: new URL('../../assets/audio/sounds.json', import.meta.url).href,
 		preload: true,
 	},
+	baseBackground: {
+		type: 'sprite',
+		src: new URL('../../assets/backgrounds/basegame_bg.jpg', import.meta.url).href,
+	},
+	logo: {
+		type: 'sprite',
+		src: new URL('../../assets/sprites/logo/logo.png', import.meta.url).href,
+	},
 } as const;
