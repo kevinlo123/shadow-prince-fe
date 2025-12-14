@@ -1,16 +1,20 @@
 <script lang="ts">
-	import { Container, Text } from 'pixi-svelte';
+	import { Container, Sprite, Circle } from 'pixi-svelte';
 	import { Button, type ButtonProps } from 'components-pixi';
 	import { OnHotkey } from 'components-shared';
 	import { stateBetDerived } from 'state-shared';
 
-	import UiSprite from './UiSprite.svelte';
 	import ButtonBetProvider from './ButtonBetProvider.svelte';
-	import { UI_BASE_FONT_SIZE, UI_BASE_SIZE } from '../constants';
-	import { i18nDerived } from '../i18n/i18nDerived';
+	import { UI_BASE_SIZE } from '../constants';
+	import { getContext } from '../context';
 
 	const props: Partial<Omit<ButtonProps, 'children'>> = $props();
-	const disabled = $derived(!stateBetDerived.isBetCostAvailable());
+	const context = getContext();
+	// Only disable clicks when idle and can't afford bet
+	// During play, the button becomes a STOP button (handled by ButtonBetProvider)
+	const disabled = $derived(
+		context.stateXstateDerived.isIdle() && !stateBetDerived.isBetCostAvailable()
+	);
 	const sizes = { width: UI_BASE_SIZE, height: UI_BASE_SIZE };
 </script>
 
@@ -20,31 +24,20 @@
 		<Button {...props} {sizes} {onpress} {disabled}>
 			{#snippet children({ center, hovered })}
 				<Container {...center}>
-					<UiSprite
-						key="bet"
-						width={sizes.width}
-						height={sizes.height}
+					<Circle
+						diameter={180}
+						backgroundColor={disabled || ['spin_disabled', 'stop_disabled'].includes(key)
+							? 0x666666
+							: 0x000000}
 						anchor={0.5}
-						{...disabled || ['spin_disabled', 'stop_disabled'].includes(key)
-							? {
-									backgroundColor: 0xaaaaaa,
-								}
-							: {}}
+						y={4}
 					/>
-					<Text
+					<Sprite
+						key="betButton"
+						width={140}
+						height={145}
 						anchor={0.5}
-						text={['spin_default', 'spin_disabled'].includes(key)
-							? i18nDerived.bet()
-							: i18nDerived.stop()}
-						style={{
-							align: 'center',
-							wordWrap: true,
-							wordWrapWidth: 200,
-							fontFamily: 'proxima-nova',
-							fontWeight: '600',
-							fontSize: UI_BASE_FONT_SIZE * 0.9,
-							fill: 0xffffff,
-						}}
+						alpha={disabled || ['spin_disabled', 'stop_disabled'].includes(key) ? 0.5 : 1}
 					/>
 				</Container>
 			{/snippet}

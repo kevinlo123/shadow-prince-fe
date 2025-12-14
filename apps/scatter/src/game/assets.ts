@@ -281,4 +281,8 @@ export default {
 		type: 'sprite',
 		src: new URL('../../assets/sprites/logo/logo.png', import.meta.url).href,
 	},
+	betButton: {
+		type: 'sprite',
+		src: new URL('../../assets/backgrounds/betbutton.png', import.meta.url).href,
+	},
 } as const;

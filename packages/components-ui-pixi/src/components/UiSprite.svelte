@@ -1,14 +1,16 @@
 <script lang="ts" module>
 	import { Rectangle, type RectangleProps } from 'pixi-svelte';
 
-	export type Props = RectangleProps;
+	export type Props = RectangleProps & {
+		key?: string;
+	};
 </script>
 
 <script lang="ts">
-	const props: Props = $props();
+	const { key, ...rectangleProps }: Props = $props();
 </script>
 
-<Rectangle borderRadius={50} {...props} />
+<Rectangle borderRadius={50} {...rectangleProps} />
 
 <!-- ADD YOUR DESIGN -->
 
