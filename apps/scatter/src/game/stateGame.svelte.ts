@@ -63,6 +63,7 @@ export type Reel = (typeof board)[number];
 export type ReelSymbol = Reel['reelState']['symbols'][number];
 
 export type TumbleSymbol = {
+	id: string;
 	symbolY: Tween<number>;
 	rawSymbol: RawSymbol;
 	symbolState: SymbolState;

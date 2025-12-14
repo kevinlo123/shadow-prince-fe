@@ -34,8 +34,10 @@
 			const getPromises = () =>
 				symbolPositions.map(async (position) => {
 					const reelSymbol = context.stateGame.board[position.reel].reelState.symbols[position.row];
+					// Set oncomplete before symbolState to batch reactive updates
+					const winPromise = waitForResolve((resolve) => (reelSymbol.oncomplete = resolve));
 					reelSymbol.symbolState = 'win';
-					await waitForResolve((resolve) => (reelSymbol.oncomplete = resolve));
+					await winPromise;
 					reelSymbol.symbolState = 'postWinStatic';
 				});
 
@@ -47,7 +49,7 @@
 					if (reelSymbol.rawSymbol.name === 'M') {
 						reelSymbol.rawSymbol = {
 							...reelSymbol.rawSymbol,
-							name: 'M_TAKEN', // TODO fix type error
+							name: 'M_TAKEN',
 						};
 					}
 				});

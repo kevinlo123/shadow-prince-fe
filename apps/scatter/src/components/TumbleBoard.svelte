@@ -32,11 +32,15 @@
 
 	let show = $state(false);
 
+	let tumbleSymbolIdCounter = 0;
+
 	const createTumbleSymbol = ({ initY, rawSymbol }: { initY: number; rawSymbol: RawSymbol }) => {
+		const id = `tumble-${tumbleSymbolIdCounter++}`;
 		const symbolY = new Tween(initY);
 		const oncomplete = () => {};
 
 		const tumbleSymbol = $state({
+			id,
 			symbolY,
 			rawSymbol,
 			symbolState: 'static' as const,
@@ -85,8 +89,10 @@
 			const getPromises = () =>
 				explodingPositions.map(async (position) => {
 					const tumbleSymbol = context.stateGame.tumbleBoardBase[position.reel][position.row];
+					// Set oncomplete before symbolState to batch reactive updates
+					const explodePromise = waitForResolve((resolve) => (tumbleSymbol.oncomplete = resolve));
 					tumbleSymbol.symbolState = 'explosion';
-					await waitForResolve((resolve) => (tumbleSymbol.oncomplete = resolve));
+					await explodePromise;
 				});
 
 			await Promise.all(getPromises());
@@ -113,14 +119,16 @@
 								});
 
 								if (symbolIndex > 0 && symbolIndex < tumbleReel.length - 1) {
-									tumbleSymbol.symbolState = 'land';
-									context.stateGameDerived.onSymbolLand({ rawSymbol: tumbleSymbol.rawSymbol });
-									await waitForResolve((resolve) => {
+									// Set oncomplete before symbolState to batch reactive updates
+									const landPromise = waitForResolve((resolve) => {
 										tumbleSymbol.oncomplete = () => {
 											tumbleSymbol.symbolState = 'static';
 											resolve();
 										};
 									});
+									tumbleSymbol.symbolState = 'land';
+									context.stateGameDerived.onSymbolLand({ rawSymbol: tumbleSymbol.rawSymbol });
+									await landPromise;
 								}
 							}
 						});
