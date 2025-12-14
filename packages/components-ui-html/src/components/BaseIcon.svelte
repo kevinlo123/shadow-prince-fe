@@ -70,5 +70,10 @@
 		background: var(--background-value);
 		border: var(--border-value);
 		border-radius: 10px;
+		transition: box-shadow 0.15s ease-out;
+
+		:global(button:hover:not(:disabled)) > & {
+			box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+		}
 	}
 </style>

@@ -22,8 +22,11 @@
 	{#snippet children({ key, onpress })}
 		<OnHotkey hotkey="Space" {disabled} {onpress} />
 		<Button {...props} {sizes} {onpress} {disabled}>
-			{#snippet children({ center, hovered })}
-				<Container {...center}>
+			{#snippet children({ center, hovered, pressed })}
+				<Container
+					{...center}
+					scale={pressed ? 0.95 : hovered && !disabled ? 1.08 : 1}
+				>
 					<Circle
 						diameter={180}
 						backgroundColor={disabled || ['spin_disabled', 'stop_disabled'].includes(key)
@@ -31,13 +34,14 @@
 							: 0x000000}
 						anchor={0.5}
 						y={4}
+						alpha={pressed ? 0.8 : hovered && !disabled ? 1 : 0.9}
 					/>
 					<Sprite
 						key="betButton"
 						width={140}
 						height={145}
 						anchor={0.5}
-						alpha={disabled || ['spin_disabled', 'stop_disabled'].includes(key) ? 0.5 : 1}
+						alpha={disabled || ['spin_disabled', 'stop_disabled'].includes(key) ? 0.5 : pressed ? 0.85 : 1}
 					/>
 				</Container>
 			{/snippet}

@@ -33,6 +33,8 @@
 			width={buttonProps.sizes.width}
 			height={buttonProps.sizes.height}
 			backgroundColor={variant === 'dark' ? 0x000000 : 0xffffff}
+			alpha={buttonProps.disabled ? 0.5 : pressed ? 0.85 : hovered ? 1 : 0.9}
+			scale={pressed ? 0.95 : hovered ? 1.05 : 1}
 			{...buttonProps.disabled
 				? {
 						backgroundColor: 0xaaaaaa,
@@ -50,6 +52,7 @@
 			{...center}
 			anchor={0.5}
 			text={i18nDerived[icon]()}
+			scale={pressed ? 0.95 : hovered ? 1.05 : 1}
 			style={{
 				align: 'center',
 				wordWrap: true,

@@ -55,6 +55,8 @@
 			anchor={0.5}
 			width={sizes.width}
 			height={sizes.height}
+			alpha={disabled ? 0.5 : pressed ? 0.85 : hovered ? 1 : 0.9}
+			scale={pressed ? 0.95 : hovered && !disabled ? 1.05 : 1}
 			{...disabled
 				? {
 						backgroundColor: 0xaaaaaa,
@@ -71,6 +73,7 @@
 		<Text
 			{...center}
 			anchor={0.5}
+			scale={pressed ? 0.95 : hovered && !disabled ? 1.05 : 1}
 			text={state === 'active' ? i18nDerived.disable() : i18nDerived.buyBonus()}
 			style={{
 				align: 'center',

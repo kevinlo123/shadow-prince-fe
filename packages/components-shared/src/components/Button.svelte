@@ -27,6 +27,19 @@
 		background-color: transparent;
 		border-color: transparent;
 		padding: 0;
+		transition:
+			transform 0.15s ease-out,
+			filter 0.15s ease-out;
+
+		&:hover:not(.disabled) {
+			transform: scale(1.02);
+			filter: brightness(1.1);
+		}
+
+		&:active:not(.disabled) {
+			transform: scale(0.98);
+			filter: brightness(0.95);
+		}
 	}
 
 	.button.debug {
